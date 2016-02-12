@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>MarkDown</title>
   <subtitle>「靡不有初，鲜克有终」</subtitle>
-  <link href="/blog/atom.xml" rel="self"/>
+  <link href="/atom.xml" rel="self"/>
   
-  <link href="http://tunpok.com/blog/"/>
+  <link href="http://blog.tunpok.com/"/>
   <updated>2016-02-12T08:35:26.000Z</updated>
-  <id>http://tunpok.com/blog/</id>
+  <id>http://blog.tunpok.com/</id>
   
   <author>
     <name>Ching</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>First Post</title>
-    <link href="http://tunpok.com/blog/2016/02/12/first-post/"/>
-    <id>http://tunpok.com/blog/2016/02/12/first-post/</id>
+    <link href="http://blog.tunpok.com/2016/02/12/first-post/"/>
+    <id>http://blog.tunpok.com/2016/02/12/first-post/</id>
     <published>2016-02-12T08:35:26.000Z</published>
     <updated>2016-02-12T08:35:26.000Z</updated>
     
@@ -38,8 +38,8 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="http://tunpok.com/blog/2016/02/12/hello-world/"/>
-    <id>http://tunpok.com/blog/2016/02/12/hello-world/</id>
+    <link href="http://blog.tunpok.com/2016/02/12/hello-world/"/>
+    <id>http://blog.tunpok.com/2016/02/12/hello-world/</id>
     <published>2016-02-12T07:30:33.000Z</published>
     <updated>2016-02-12T07:30:33.000Z</updated>
     

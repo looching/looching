@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.tunpok.com/2016/02/16/Flask-Day-2/</loc>
+    
+    <lastmod>2016-02-16T14:37:09.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.tunpok.com/2016/02/15/Flask-Day-1/</loc>
     
     <lastmod>2016-02-14T17:23:33.000Z</lastmod>

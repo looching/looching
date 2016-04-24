@@ -2,28 +2,35 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://blog.tunpok.com/2016/02/16/Flask-Day-2/</loc>
+    <loc>http://blog.tunpok.com/2016/04/24/Django-Manager-Method/</loc>
     
-    <lastmod>2016-02-16T14:37:09.000Z</lastmod>
+    <lastmod>2016-04-24T15:52:06.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.tunpok.com/2016/02/15/Flask-Day-1/</loc>
+    <loc>http://blog.tunpok.com/2016/04/24/Flask-Day-2/</loc>
+    
+    <lastmod>2016-02-16T14:45:06.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.tunpok.com/2016/04/24/Flask-Day-1/</loc>
     
     <lastmod>2016-02-14T17:23:33.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.tunpok.com/2016/02/13/hello-world/</loc>
+    <loc>http://blog.tunpok.com/2016/04/24/hello-world/</loc>
     
     <lastmod>2016-02-13T09:27:25.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.tunpok.com/2016/02/12/first-post/</loc>
+    <loc>http://blog.tunpok.com/2016/04/24/first-post/</loc>
     
     <lastmod>2016-02-12T08:35:26.000Z</lastmod>
     

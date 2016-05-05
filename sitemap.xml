@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.tunpok.com/2016/05/04/Tastypie/</loc>
+    
+    <lastmod>2016-05-04T05:51:38.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.tunpok.com/2016/04/25/Django-Manager-Method/</loc>
     
     <lastmod>2016-04-24T16:20:09.000Z</lastmod>

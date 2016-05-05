@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.tunpok.com/"/>
-  <updated>2016-04-24T16:20:09.000Z</updated>
+  <updated>2016-05-04T05:51:38.000Z</updated>
   <id>http://blog.tunpok.com/</id>
   
   <author>
@@ -14,6 +14,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Tastypie</title>
+    <link href="http://blog.tunpok.com/2016/05/04/Tastypie/"/>
+    <id>http://blog.tunpok.com/2016/05/04/Tastypie/</id>
+    <published>2016-05-04T04:02:00.000Z</published>
+    <updated>2016-05-04T05:51:38.000Z</updated>
+    
+    <content type="html">&lt;h4 id=&quot;Resourcesin_Tastypie&quot;&gt;&lt;a href=&quot;#Resourcesin_Tastypie&quot; class=&quot;headerlink&quot; title=&quot;Resourcesin Tastypie&quot;&gt;&lt;/a&gt;Resourcesin Tastypie&lt;/h4&gt;&lt;p&gt;Resources are the heart of Tastypie. By defining a resource we can actually convert a model into an API stream. The data is automatically converted into API response.&lt;/p&gt;
+&lt;p&gt;Understanding the process of creating a resource.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Import ModelResource from Tastypie.&lt;/li&gt;
+&lt;li&gt;Import models from services app&lt;/li&gt;
+&lt;li&gt;Create custom resource by inheriting ModelResource and link app model in inner Meta class of resource. &lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Add API URL in the urls.py of app.&lt;/p&gt;
+&lt;h4 id=&quot;Dehydrating_the_JSON_data&quot;&gt;&lt;a href=&quot;#Dehydrating_the_JSON_data&quot; class=&quot;headerlink&quot; title=&quot;Dehydrating the JSON data&quot;&gt;&lt;/a&gt;Dehydrating the JSON data&lt;/h4&gt;&lt;p&gt;&lt;img src=&quot;https://impythonist.files.wordpress.com/2016/04/tastypie_ill.png?w=1000&quot; alt=&quot;flow&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Dehydration in Tastypie means making alterations before sending data to the client. Suppose we need to send capitalized product names instead of small letters. Now we see two kinds of dehydrate methods.&lt;/p&gt;
+&lt;h5 id=&quot;Dehydrate_field_method&quot;&gt;&lt;a href=&quot;#Dehydrate_field_method&quot; class=&quot;headerlink&quot; title=&quot;Dehydrate_field method&quot;&gt;&lt;/a&gt;Dehydrate_field method&lt;/h5&gt;&lt;p&gt;This &lt;code&gt;dehydrate_field&lt;/code&gt; is uesd to modify field on the response JSON. &lt;/p&gt;
+&lt;h5 id=&quot;Dehydrate_method&quot;&gt;&lt;a href=&quot;#Dehydrate_method&quot; class=&quot;headerlink&quot; title=&quot;Dehydrate method&quot;&gt;&lt;/a&gt;Dehydrate method&lt;/h5&gt;&lt;p&gt;Dehydrate method is useful for aadding additional fields to bundle (response data). &lt;/p&gt;
+&lt;p&gt;Similarly using &lt;code&gt;hydrate&lt;/code&gt; method we can alter the bundle data which is generated from request at the time of PUT or POST methods.&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h4 id=&quot;Resourcesin_Tastypie&quot;&gt;&lt;a href=&quot;#Resourcesin_Tastypie&quot; class=&quot;headerlink&quot; title=&quot;Resourcesin Tastypie&quot;&gt;&lt;/a&gt;Resourcesin Tastypie&lt;/h4&gt;&lt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Django Manager Method</title>

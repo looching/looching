@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.tunpok.com/2016/05/10/TastyPie-Note-1/</loc>
+    
+    <lastmod>2016-05-12T13:12:30.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.tunpok.com/2016/05/04/Tastypie/</loc>
     
     <lastmod>2016-05-05T07:08:52.000Z</lastmod>
@@ -11,28 +18,28 @@
   <url>
     <loc>http://blog.tunpok.com/2016/04/25/Django-Manager-Method/</loc>
     
-    <lastmod>2016-04-24T16:20:09.000Z</lastmod>
+    <lastmod>2016-04-24T16:20:08.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.tunpok.com/2016/02/16/Flask-Day-2/</loc>
     
-    <lastmod>2016-04-24T16:18:51.000Z</lastmod>
+    <lastmod>2016-04-24T16:18:50.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.tunpok.com/2016/02/15/Flask-Day-1/</loc>
     
-    <lastmod>2016-04-24T16:18:09.000Z</lastmod>
+    <lastmod>2016-04-24T16:18:08.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.tunpok.com/2016/02/12/first-post/</loc>
     
-    <lastmod>2016-04-24T16:17:25.000Z</lastmod>
+    <lastmod>2016-04-24T16:17:24.000Z</lastmod>
     
   </url>
   

@@ -1,0 +1,38 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> TastyPie Note 1 · MarkDown</title><meta name="description" content="TastyPie Note 1 - Ching"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/favicon.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="https://github.com/looching" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">TastyPie Note 1</h1><div class="post-meta"><div class="post-time">2016年5月10日</div></div><div class="post-content"><h3 id="Flow_Through_The_Request/Response_Cycle"><a href="#Flow_Through_The_Request/Response_Cycle" class="headerlink" title="Flow Through The Request/Response Cycle"></a>Flow Through The Request/Response Cycle</h3><p>Tastypie can be thought of as a set of class-based view that provide the API functionality. All routing/middleware/response-handling aspectss are the same as a typical Django app. Where the differs is in the view itself.</p>
+<p>Walking through what a GET request to a list endpoint looks like:</p>
+<ul>
+<li><p>The <code>Resource.urls</code> are checked by Django’s url resolvers.</p>
+</li>
+<li><p>On a match for the list view, <code>Resource.wrap_view(&#39;dispatch_list&#39;)</code> is called. <code>wrap_view</code> provides basic error handling &amp; allows for returning serilized errors.</p>
+</li>
+<li><p>Because dispatch_list was passed to <code>wrap_view</code>, <code>Resource.dispatch_list</code> is called next. This is a thin wrapper around <code>Resource.dispatch</code>.</p>
+</li>
+<li><p><code>dispatch</code> does a bunch of havy lifting. It ensures:</p>
+<ul>
+<li>the requested HTTP method is in <code>allowed_methos</code> (<code>method_check</code>).</li>
+<li>the class has a method that can handle the request(<code>get_list</code>)</li>
+<li>the user is authenticated(<code>is_authenticated</code>)</li>
+<li>the user has no exceeded their throttle(<code>throttle_check</code>).</li>
+</ul>
+<p>At this point, <code>dispatch</code> actually calls the requested method (<code>get_list</code>).</p>
+</li>
+<li><p><code>get_list</code> does the actual work of API. It does:</p>
+<ul>
+<li>A fetch of the available objects via <code>Resource.obj_get_list</code>. In the case of <code>ModelResource</code>, this builds the ORM filters to apply (<code>ModelResource.build_filters</code>). It then gets the <code>QuerySet</code> via <code>ModelResource.get_object_list</code> (which performs <code>Resource.authorized_read_list</code> to possibly limit the set the user can work with) and applies the built filters to it.</li>
+<li>It then sorts the objects based on user input (<code>ModelResource.apply_sorting</code>).</li>
+<li>Then it paginates the results using the supplied <code>Paginator</code> &amp; pulls out the data to be serialized.</li>
+<li>The objects in the page have <code>full_dehydrate</code> applied to each of them, causing Tastypie to traslate the raw object data into the fields the endpoint supports.</li>
+<li>Finally, it calls <code>Resource.create_response</code>.</li>
+</ul>
+</li>
+<li><p><code>create_response</code> is a shortcut method that:</p>
+<ul>
+<li>Determines the desired response format (<code>Resource.determine_format</code>).</li>
+<li>Serializes the data given to it in the proper format.</li>
+<li>Returns a Django <code>HttpResponse</code> (200 OK) with the serialized data.</li>
+</ul>
+</li>
+<li><p>We bubble back up the call stack to <code>dispatch</code>. The last thing <code>dispatch</code> does is potentially store that a request occured for future throttling (<code>Resource.log_throttled_access</code>) then either returns the <code>HttpResponse</code> or wraps whatever data came back in a response (so Django doesn’t freak out).</p>
+</li>
+</ul>
+</div></article></div></section><footer><div class="paginator"><a href="/2016/05/04/Tastypie/" class="next">下一篇</a></div><div class="copyright"><p>© 2016 <a href="http://blog.tunpok.com">Ching</a>, unless otherwise noted.</p></div></footer><script src="https://cdn.bootcss.com/mathjax/2.5.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script></body></html>

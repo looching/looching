@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.tunpok.com/"/>
-  <updated>2016-05-05T07:08:52.000Z</updated>
+  <updated>2016-05-12T13:12:30.000Z</updated>
   <id>http://blog.tunpok.com/</id>
   
   <author>
@@ -14,6 +14,61 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>TastyPie Note 1</title>
+    <link href="http://blog.tunpok.com/2016/05/10/TastyPie-Note-1/"/>
+    <id>http://blog.tunpok.com/2016/05/10/TastyPie-Note-1/</id>
+    <published>2016-05-10T09:00:00.000Z</published>
+    <updated>2016-05-12T13:12:30.000Z</updated>
+    
+    <content type="html">&lt;h3 id=&quot;Flow_Through_The_Request/Response_Cycle&quot;&gt;&lt;a href=&quot;#Flow_Through_The_Request/Response_Cycle&quot; class=&quot;headerlink&quot; title=&quot;Flow Through The Request/Response Cycle&quot;&gt;&lt;/a&gt;Flow Through The Request/Response Cycle&lt;/h3&gt;&lt;p&gt;Tastypie can be thought of as a set of class-based view that provide the API functionality. All routing/middleware/response-handling aspectss are the same as a typical Django app. Where the differs is in the view itself.&lt;/p&gt;
+&lt;p&gt;Walking through what a GET request to a list endpoint looks like:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;The &lt;code&gt;Resource.urls&lt;/code&gt; are checked by Django’s url resolvers.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;On a match for the list view, &lt;code&gt;Resource.wrap_view(&amp;#39;dispatch_list&amp;#39;)&lt;/code&gt; is called. &lt;code&gt;wrap_view&lt;/code&gt; provides basic error handling &amp;amp; allows for returning serilized errors.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Because dispatch_list was passed to &lt;code&gt;wrap_view&lt;/code&gt;, &lt;code&gt;Resource.dispatch_list&lt;/code&gt; is called next. This is a thin wrapper around &lt;code&gt;Resource.dispatch&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;dispatch&lt;/code&gt; does a bunch of havy lifting. It ensures:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the requested HTTP method is in &lt;code&gt;allowed_methos&lt;/code&gt; (&lt;code&gt;method_check&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;the class has a method that can handle the request(&lt;code&gt;get_list&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;the user is authenticated(&lt;code&gt;is_authenticated&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;the user has no exceeded their throttle(&lt;code&gt;throttle_check&lt;/code&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;At this point, &lt;code&gt;dispatch&lt;/code&gt; actually calls the requested method (&lt;code&gt;get_list&lt;/code&gt;).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;get_list&lt;/code&gt; does the actual work of API. It does:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A fetch of the available objects via &lt;code&gt;Resource.obj_get_list&lt;/code&gt;. In the case of &lt;code&gt;ModelResource&lt;/code&gt;, this builds the ORM filters to apply (&lt;code&gt;ModelResource.build_filters&lt;/code&gt;). It then gets the &lt;code&gt;QuerySet&lt;/code&gt; via &lt;code&gt;ModelResource.get_object_list&lt;/code&gt; (which performs &lt;code&gt;Resource.authorized_read_list&lt;/code&gt; to possibly limit the set the user can work with) and applies the built filters to it.&lt;/li&gt;
+&lt;li&gt;It then sorts the objects based on user input (&lt;code&gt;ModelResource.apply_sorting&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Then it paginates the results using the supplied &lt;code&gt;Paginator&lt;/code&gt; &amp;amp; pulls out the data to be serialized.&lt;/li&gt;
+&lt;li&gt;The objects in the page have &lt;code&gt;full_dehydrate&lt;/code&gt; applied to each of them, causing Tastypie to traslate the raw object data into the fields the endpoint supports.&lt;/li&gt;
+&lt;li&gt;Finally, it calls &lt;code&gt;Resource.create_response&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;create_response&lt;/code&gt; is a shortcut method that:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Determines the desired response format (&lt;code&gt;Resource.determine_format&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;Serializes the data given to it in the proper format.&lt;/li&gt;
+&lt;li&gt;Returns a Django &lt;code&gt;HttpResponse&lt;/code&gt; (200 OK) with the serialized data.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;We bubble back up the call stack to &lt;code&gt;dispatch&lt;/code&gt;. The last thing &lt;code&gt;dispatch&lt;/code&gt; does is potentially store that a request occured for future throttling (&lt;code&gt;Resource.log_throttled_access&lt;/code&gt;) then either returns the &lt;code&gt;HttpResponse&lt;/code&gt; or wraps whatever data came back in a response (so Django doesn’t freak out).&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;Flow_Through_The_Request/Response_Cycle&quot;&gt;&lt;a href=&quot;#Flow_Through_The_Request/Response_Cycle&quot; class=&quot;headerlink&quot; title=&quot;Flow Through T
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Tastypie</title>
@@ -51,7 +106,7 @@
     <link href="http://blog.tunpok.com/2016/04/25/Django-Manager-Method/"/>
     <id>http://blog.tunpok.com/2016/04/25/Django-Manager-Method/</id>
     <published>2016-04-24T16:00:01.000Z</published>
-    <updated>2016-04-24T16:20:09.000Z</updated>
+    <updated>2016-04-24T16:20:08.000Z</updated>
     
     <content type="html">&lt;h4 id=&quot;Django_Manager&quot;&gt;&lt;a href=&quot;#Django_Manager&quot; class=&quot;headerlink&quot; title=&quot;Django Manager&quot;&gt;&lt;/a&gt;Django Manager&lt;/h4&gt;&lt;p&gt;Django 里会为每一个 model 生成一个 Manager，默认名字为 objects，一般情况下对 model 进行的处理都是通过 model.objects.XXX( ) 来进行的。其实是调用了 model 的 manager 的方法，而 manager 之中的方法是 QuerySet 方法的代理，QuerySet 方法是对数据库操作的封装。&lt;/p&gt;
 &lt;p&gt;eg.&lt;/p&gt;
@@ -83,7 +138,7 @@
     <link href="http://blog.tunpok.com/2016/02/16/Flask-Day-2/"/>
     <id>http://blog.tunpok.com/2016/02/16/Flask-Day-2/</id>
     <published>2016-02-16T14:45:06.000Z</published>
-    <updated>2016-04-24T16:18:51.000Z</updated>
+    <updated>2016-04-24T16:18:50.000Z</updated>
     
     <content type="html">&lt;p&gt;To handle web forms we use &lt;a href=&quot;http://packages.python.org/Flask-WTF&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Flask-WTF    &lt;/a&gt;. So we need to write a config file (file &lt;code&gt;config.py&lt;/code&gt;):&lt;/p&gt;
 &lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;WTF_CSRF_ENABLED = &lt;span class=&quot;keyword&quot;&gt;True&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;SECRET_KEY = &lt;span class=&quot;string&quot;&gt;&#39;you-will-never-guess&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -112,7 +167,7 @@
     <link href="http://blog.tunpok.com/2016/02/15/Flask-Day-1/"/>
     <id>http://blog.tunpok.com/2016/02/15/Flask-Day-1/</id>
     <published>2016-02-14T17:23:33.000Z</published>
-    <updated>2016-04-24T16:18:09.000Z</updated>
+    <updated>2016-04-24T16:18:08.000Z</updated>
     
     <content type="html">&lt;h3 id=&quot;u201CHello_World_u201D_in_Flask&quot;&gt;&lt;a href=&quot;#u201CHello_World_u201D_in_Flask&quot; class=&quot;headerlink&quot; title=&quot;“Hello World” in Flask&quot;&gt;&lt;/a&gt;“Hello World” in Flask&lt;/h3&gt;&lt;p&gt;Create a folder named &lt;code&gt;microblog&lt;/code&gt; (or whatever you want). Then cd into that folder and run following prompt in terminal:&lt;/p&gt;
 &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ python3 -m venv flask&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -157,7 +212,7 @@
     <link href="http://blog.tunpok.com/2016/02/12/first-post/"/>
     <id>http://blog.tunpok.com/2016/02/12/first-post/</id>
     <published>2016-02-12T10:00:00.000Z</published>
-    <updated>2016-04-24T16:17:25.000Z</updated>
+    <updated>2016-04-24T16:17:24.000Z</updated>
     
     <content type="html">&lt;p&gt;This is the very first post I wrote,&lt;/p&gt;
 &lt;p&gt;with &lt;a href=&quot;https://www.typora.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Typora&lt;/a&gt; &amp;amp; &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;.&lt;/p&gt;
